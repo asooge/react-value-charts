@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 class Ticker extends React.Component {
     constructor() {
@@ -15,7 +16,12 @@ class Ticker extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        
+        axios('https://financialmodelingprep.com/api/v3/financials/income-statement/' + this.state.ticker)
+            .then(res => {
+                console.log(res)
+                this.props.setApp({ financials: {...this.props.financials , [res.data.symbol]: res.data.financials}  })
+            }
+            )
     }
 
     render() {
